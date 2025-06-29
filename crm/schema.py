@@ -1,7 +1,9 @@
 # crm/schema.py
 import graphene
 from graphene_django.types import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
 from .models import Customer, Product, Order
+from .filters import CustomerFilter, ProductFilter, OrderFilter
 from django.core.exceptions import ValidationError
 from django.db import transaction
 import re
@@ -9,14 +11,17 @@ import re
 class CustomerType(DjangoObjectType):
     class Meta:
         model = Customer
+        interfaces = (graphene.relay.Node, )
 
 class ProductType(DjangoObjectType):
     class Meta:
         model = Product
+        interfaces = (graphene.relay.Node, )
 
 class OrderType(DjangoObjectType):
     class Meta:
         model = Order
+        interfaces = (graphene.relay.Node, )
 
 class CreateCustomer(graphene.Mutation):
     class Arguments:
@@ -115,16 +120,6 @@ class Mutation(graphene.ObjectType):
     create_order = CreateOrder.Field()
 
 class Query(graphene.ObjectType):
-    all_customers = graphene.List(CustomerType)
-    all_products = graphene.List(ProductType)
-    all_orders = graphene.List(OrderType)
-
-    def resolve_all_customers(self, info):
-        return Customer.objects.all()
-
-    def resolve_all_products(self, info):
-        return Product.objects.all()
-
-    def resolve_all_orders(self, info):
-        return Order.objects.select_related('customer').prefetch_related('products')
-    
+    all_customers = DjangoFilterConnectionField(CustomerType, filterset_class=CustomerFilter)
+    all_products = DjangoFilterConnectionField(ProductType, filterset_class=ProductFilter)
+    all_orders = DjangoFilterConnectionField(OrderType, filterset_class=OrderFilter)
