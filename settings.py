@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crm',  # Custom app for CRM functionality
     'graphene_django',  # Graphene Django integration
+    'django_filter',  # For filtering capabilities
 ]
 
 MIDDLEWARE = [
