@@ -123,3 +123,23 @@ class Query(graphene.ObjectType):
     all_customers = DjangoFilterConnectionField(CustomerType, filterset_class=CustomerFilter)
     all_products = DjangoFilterConnectionField(ProductType, filterset_class=ProductFilter)
     all_orders = DjangoFilterConnectionField(OrderType, filterset_class=OrderFilter)
+
+# crm/schema.py (partial addition for mutation)
+class UpdateLowStockProducts(graphene.Mutation):
+    class Output:
+        products = graphene.List(ProductType)
+        message = graphene.String()
+
+    def mutate(self, info):
+        low_stock = Product.objects.filter(stock__lt=10)
+        for p in low_stock:
+            p.stock += 10
+            p.save()
+        return UpdateLowStockProducts(products=low_stock, message="Stock levels updated for low-stock products")
+
+class Mutation(graphene.ObjectType):
+    create_customer = CreateCustomer.Field()
+    bulk_create_customers = BulkCreateCustomers.Field()
+    create_product = CreateProduct.Field()
+    create_order = CreateOrder.Field()
+    update_low_stock_products = UpdateLowStockProducts.Field()

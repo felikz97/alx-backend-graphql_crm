@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     'crm',  # Custom app for CRM functionality
     'graphene_django',  # Graphene Django integration
     'django_filter',  # For filtering capabilities
+    'django_cors_headers',  # For handling CORS
+    'gql',  # GraphQL client library
+    'gql.transport.requests',  # Transport layer for GraphQL requests
+    'gql.transport.websockets',  # WebSocket transport for GraphQL
+    'django_crontab',  # For scheduling cron jobs
+    'rest_framework',  # Django REST Framework for API support
 ]
 
 MIDDLEWARE = [
@@ -50,6 +56,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CRONJOBS = [
+    ('*/5 * * * *', 'crm.cron.log_crm_heartbeat'),
+    ('0 */12 * * *', 'crm.cron.update_low_stock'),
 ]
 
 ROOT_URLCONF = 'alx-backend-graphql_crm.urls'
