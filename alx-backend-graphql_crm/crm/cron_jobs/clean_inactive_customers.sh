@@ -18,3 +18,6 @@ print(deleted_count)
 EOF
 )
 echo "$TIMESTAMP - Deleted $DELETED inactive customers" >> /tmp/customer_cleanup_log.txt
+
+# crm/cron_jobs/customer_cleanup_crontab.txt
+0 2 * * 0 /path/to/your/project/crm/cron_jobs/clean_inactive_customers.sh
