@@ -1,6 +1,10 @@
 # crm/cron_jobs/clean_inactive_customers.sh
 #!/bin/bash
 
+# Get the current script directory and go to project root
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+cd "$SCRIPT_DIR/../.."
+
 # Run Django shell command to delete inactive customers and log the result
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 DELETED=$(python manage.py shell <<EOF
