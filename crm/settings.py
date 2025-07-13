@@ -40,6 +40,15 @@ INSTALLED_APPS = [
     'crm',  # Custom app for CRM functionality
     'graphene_django',  # Graphene Django integration
     'django_filter',  # For filtering capabilities
+    'django_cors_headers',  # For handling CORS
+    'gql',  # GraphQL client library
+    'gql.transport.requests',  # Transport layer for GraphQL requests
+    'django_crontab',  # For scheduling cron jobs
+    'rest_framework',  # Django REST Framework for API support
+]
+
+CRONJOBS = [
+    ('*/5 * * * *', 'crm.cron.log_crm_heartbeat'),
 ]
 
 MIDDLEWARE = [

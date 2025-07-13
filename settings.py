@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework for API support
 ]
 
+CRONJOBS = [
+    ('*/5 * * * *', 'crm.cron.log_crm_heartbeat'),
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
