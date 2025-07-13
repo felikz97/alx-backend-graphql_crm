@@ -14,6 +14,4 @@ def update_low_stock():
     except Exception as e:
         with open('/tmp/low_stock_updates_log.txt', 'a') as f:
             f.write(f"{timestamp} - Error: {e}\n")
-import requests
-from datetime import datetime
-from apscheduler.schedulers.background import BackgroundScheduler
+
