@@ -45,7 +45,21 @@ INSTALLED_APPS = [
     'gql.transport.requests',  # Transport layer for GraphQL requests
     'django_crontab',  # For scheduling cron jobs
     'rest_framework',  # Django REST Framework for API support
+    'django_celery_beat',  # For periodic task scheduling with Celery
+    'django_celery_results',  # For storing Celery task results
 ]
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+from celery.schedules import crontab
+CELERY_BEAT_SCHEDULE = {
+    'generate-crm-report': {
+        'task': 'crm.tasks.generate_crm_report',
+        'schedule': crontab(day_of_week='mon', hour=6, minute=0),
+    },
+}
 
 CRONJOBS = [
     ('*/5 * * * *', 'crm.cron.log_crm_heartbeat'),
