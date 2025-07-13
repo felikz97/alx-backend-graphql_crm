@@ -1,5 +1,9 @@
 # crm/models.py
 from django.db import models
+from django.contrib import admin 
+from django.urls import path
+from graphene_django.views import GraphQLView
+from django.views.decorators.csrf import csrf_exempt       
 
 class Customer(models.Model):
     name = models.CharField(max_length=255)
