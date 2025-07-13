@@ -4,14 +4,14 @@
 # Change to project root
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 cd "$SCRIPT_DIR/../.."
-CWD=$(pwd)
+cwd=$(pwd)
 
 # Check if manage.py exists
-if [ ! -f "$CWD/manage.py" ]; then
-  echo "manage.py not found in $CWD. Exiting."
+if [ ! -f "$cwd/manage.py" ]; then
+  echo "manage.py not found in $cwd. Exiting."
   exit 1
 else
-  echo "Running cleanup in $CWD"
+  echo "Running cleanup in $cwd"
 fi
 
 # Run Django shell command to delete inactive customers and log the result
